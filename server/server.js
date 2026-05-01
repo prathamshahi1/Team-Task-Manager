@@ -24,7 +24,7 @@ app.use(cors({
 // ✅ Middleware
 app.use(express.json());
 
-// ✅ TEST ROUTE (PUT THIS FIRST 🔥)
+// ✅ TEST ROUTE
 app.get("/api", (req, res) => {
   res.send("API is running 🚀");
 });
@@ -48,8 +48,8 @@ const frontendPath = path.join(__dirname, "dist");
 
 app.use(express.static(frontendPath));
 
-// ✅ IMPORTANT: catch-all LAST
-app.get("/*", (req, res) => {
+// ✅ ✅ FINAL FIX (NO "*", NO "/*")
+app.use((req, res) => {
   res.sendFile(path.join(frontendPath, "index.html"));
 });
 
