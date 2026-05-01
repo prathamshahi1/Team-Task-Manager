@@ -16,17 +16,14 @@ dotenv.config();
 
 const app = express();
 
-
-// ✅ CORS (IMPORTANT for deployment)
+// ✅ CORS
 app.use(cors({
-  origin: "*", // change to frontend URL later
+  origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
 }));
 
-// Middleware
+// ✅ Middleware
 app.use(express.json());
-
 
 // ✅ API Routes
 app.use("/api/auth", authRoutes);
@@ -36,30 +33,28 @@ app.use("/api/tasks", taskRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/users", userRoutes);
 
-
 // ✅ MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => console.log("❌ DB Error:", err));
 
-
-// ✅ Serve frontend (after build)
+// ✅ Serve frontend (only if build exists)
 const __dirname = path.resolve();
+const frontendPath = path.join(__dirname, "dist");
 
-app.use(express.static(path.join(__dirname, "dist")));
+app.use(express.static(frontendPath));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
+// ✅ FIXED ROUTE (NO "*")
+app.use((req, res) => {
+  res.sendFile(path.join(frontendPath, "index.html"));
 });
-
 
 // ✅ Test Route
 app.get("/api", (req, res) => {
   res.send("API is running 🚀");
 });
 
-
-// ✅ Start Server (Railway uses PORT)
+// ✅ Start Server
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
