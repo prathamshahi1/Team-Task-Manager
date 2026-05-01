@@ -19,11 +19,15 @@ const app = express();
 // ✅ CORS
 app.use(cors({
   origin: "*",
-  methods: ["GET", "POST", "PUT", "DELETE"],
 }));
 
 // ✅ Middleware
 app.use(express.json());
+
+// ✅ TEST ROUTE (PUT THIS FIRST 🔥)
+app.get("/api", (req, res) => {
+  res.send("API is running 🚀");
+});
 
 // ✅ API Routes
 app.use("/api/auth", authRoutes);
@@ -38,20 +42,15 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => console.log("❌ DB Error:", err));
 
-// ✅ Serve frontend (only if build exists)
+// ✅ Serve frontend
 const __dirname = path.resolve();
 const frontendPath = path.join(__dirname, "dist");
 
 app.use(express.static(frontendPath));
 
-// ✅ FIXED ROUTE (NO "*")
-app.use((req, res) => {
+// ✅ IMPORTANT: catch-all LAST
+app.get("*", (req, res) => {
   res.sendFile(path.join(frontendPath, "index.html"));
-});
-
-// ✅ Test Route
-app.get("/api", (req, res) => {
-  res.send("API is running 🚀");
 });
 
 // ✅ Start Server
