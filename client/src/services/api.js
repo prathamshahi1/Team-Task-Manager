@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api"
+  baseURL: "https://responsible-simplicity-production.up.railway.app/api"
 });
 
 // 🔥 THIS IS CRITICAL
