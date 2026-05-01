@@ -1,0 +1,54 @@
+/* Container */
+.dashboard {
+  padding: 10px;
+}
+
+/* Title */
+.dashboard-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Card layout */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* Card */
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Numbers */
+.card p {
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Color themes */
+.card.total {
+  border-left: 5px solid #3b82f6;
+}
+
+.card.completed {
+  border-left: 5px solid #22c55e;
+}
+
+.card.pending {
+  border-left: 5px solid #f59e0b;
+}
+
+.card.overdue {
+  border-left: 5px solid #ef4444;
+}
